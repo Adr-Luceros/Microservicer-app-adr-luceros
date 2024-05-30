@@ -11,15 +11,20 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.api.viaje_service.Dto.RecepcionData;
+import com.api.viaje_service.Dto.ViajeDto;
 
 @Service
 public class RecepcionService {
 
-    public List<RecepcionData> convertExcelToData(MultipartFile file) {
+    @Autowired
+    AgruparService agruparService;
+
+    public List<ViajeDto> convertExcelToData(MultipartFile file) {
         List<RecepcionData> dataList = new ArrayList<>();
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
@@ -114,9 +119,6 @@ public class RecepcionService {
                         case "Volumen":
                             data.setVolumen(Float.parseFloat(cellValue));
                             break;
-                        default:
-                            // Handle any other headers if necessary
-                            break;
                     }
                 }
                 dataList.add(data);
@@ -124,8 +126,8 @@ public class RecepcionService {
         } catch (IOException e) {
             throw new RuntimeException("Error occurred while parsing Excel file: " + e.getMessage(), e);
         }
-
-        return dataList;
+        List<ViajeDto> viajes = agruparService.agrupar(dataList);
+        return viajes;
     }
 
     private String normalizeTime(String time) {
@@ -161,7 +163,6 @@ public class RecepcionService {
         }
 
         return newTime + ":00";
-
     }
 
 }

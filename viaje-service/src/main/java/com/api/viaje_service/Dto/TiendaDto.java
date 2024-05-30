@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Cliente {
+public class TiendaDto {
     private String psEx;
     private String destinatario;
     private String tienda;
@@ -74,8 +74,8 @@ public class Cliente {
             return this;
         }
 
-        public Cliente build() {
-            return new Cliente(
+        public TiendaDto build() {
+            return new TiendaDto(
                     psEx,
                     destinatario,
                     tienda,
