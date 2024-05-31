@@ -1,6 +1,7 @@
 package com.api.viaje_service.Service;
 
 import java.io.IOException;
+import java.sql.Time;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.api.viaje_service.Dto.RecepcionData;
-import com.api.viaje_service.Dto.ViajeDto;
 
 @Service
 public class RecepcionService {
@@ -24,7 +24,7 @@ public class RecepcionService {
     @Autowired
     AgruparService agruparService;
 
-    public List<ViajeDto> convertExcelToData(MultipartFile file) {
+    public List<RecepcionData> convertExcelToData(MultipartFile file) {
         List<RecepcionData> dataList = new ArrayList<>();
 
         try (XSSFWorkbook workbook = new XSSFWorkbook(file.getInputStream())) {
@@ -95,13 +95,13 @@ public class RecepcionService {
                                 if (times.length != 0) {
                                     if (!times[0].isEmpty()) {
                                         String startTimeStr = normalizeTime(times[0]);
-                                        LocalTime horaInicio = LocalTime.parse(startTimeStr, timeFormatter);
+                                        Time horaInicio = Time.valueOf(LocalTime.parse(startTimeStr, timeFormatter));
                                         data.setHoraInicio(horaInicio);
                                     }
 
                                     if (!times[1].isEmpty()) {
                                         String endTimeStr = normalizeTime(times[1]);
-                                        LocalTime horaFinal = LocalTime.parse(endTimeStr, timeFormatter);
+                                        Time horaFinal = Time.valueOf(LocalTime.parse(endTimeStr, timeFormatter));
                                         data.setHoraFinal(horaFinal);
                                     }
                                 }
@@ -126,8 +126,7 @@ public class RecepcionService {
         } catch (IOException e) {
             throw new RuntimeException("Error occurred while parsing Excel file: " + e.getMessage(), e);
         }
-        List<ViajeDto> viajes = agruparService.agrupar(dataList);
-        return viajes;
+        return dataList;
     }
 
     private String normalizeTime(String time) {

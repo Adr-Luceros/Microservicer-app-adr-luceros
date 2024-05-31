@@ -1,6 +1,6 @@
 package com.api.viaje_service.Dto;
 
-import java.time.LocalTime;
+import java.sql.Time;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -17,8 +17,8 @@ public class TiendaDto {
     private String tienda;
     private String distrito;
     private String direccion;
-    private LocalTime horaInicio;
-    private LocalTime horaFin;
+    private Time horaInicio;
+    private Time horaFin;
     private float volumen;
 
     public static class Builder {
@@ -27,8 +27,8 @@ public class TiendaDto {
         private String tienda;
         private String distrito;
         private String direccion;
-        private LocalTime horaInicio;
-        private LocalTime horaFin;
+        private Time horaInicio;
+        private Time horaFin;
         private float volumen;
 
         public Builder() {
@@ -59,12 +59,12 @@ public class TiendaDto {
             return this;
         }
 
-        public Builder horaInicio(LocalTime horaInicio) {
+        public Builder horaInicio(Time horaInicio) {
             this.horaInicio = horaInicio;
             return this;
         }
 
-        public Builder horaFin(LocalTime horaFin) {
+        public Builder horaFin(Time horaFin) {
             this.horaFin = horaFin;
             return this;
         }

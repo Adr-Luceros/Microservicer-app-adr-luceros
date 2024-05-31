@@ -1,6 +1,6 @@
 package com.api.viaje_service.Dto;
 
-import java.time.LocalTime;
+import java.sql.Time;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -23,8 +23,8 @@ public class RecepcionData {
     private String tienda;
     private String distrito;
     private String direccion;
-    private LocalTime horaInicio;
-    private LocalTime horaFinal;
+    private Time horaInicio;
+    private Time horaFinal;
     private String documentacion;
     private String observaciones;
     private String canal;

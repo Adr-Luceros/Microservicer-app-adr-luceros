@@ -4,3 +4,17 @@ spring:
     cloud:
         config:
             uri: http://localhost:8860
+    datasource:
+        url: jdbc:mysql://localhost:3306/viaje?serverTimezone=UTC
+        username: root
+        password: 12345678
+        driver-class-name: com.mysql.cj.jdbc.Driver
+    jpa:
+        hibernate:
+            ddl-auto: update
+        properties:
+            hibernate:
+                dialec: org.hibernate.dialect.MySQL5Dialect
+        show-sql: true
+
+    
