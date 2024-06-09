@@ -90,21 +90,29 @@ public class RecepcionService {
                             data.setDireccion(cellValue);
                             break;
                         case "Vh":
-                            if (!cellValue.isEmpty()) {
-                                String[] times = cellValue.split("-");
-                                if (times.length != 0) {
-                                    if (!times[0].isEmpty()) {
-                                        String startTimeStr = normalizeTime(times[0]);
-                                        Time horaInicio = Time.valueOf(LocalTime.parse(startTimeStr, timeFormatter));
-                                        data.setHoraInicio(horaInicio);
-                                    }
+                            try {
+                                if (!cellValue.isEmpty()) {
+                                    String[] times = cellValue.split("-");
+                                    if (times.length != 0) {
+                                        if (!times[0].isEmpty()) {
+                                            String startTimeStr = normalizeTime(times[0]);
+                                            Time horaInicio = Time
+                                                    .valueOf(LocalTime.parse(startTimeStr, timeFormatter));
+                                            data.setHoraInicio(horaInicio);
+                                        }
 
-                                    if (!times[1].isEmpty()) {
-                                        String endTimeStr = normalizeTime(times[1]);
-                                        Time horaFinal = Time.valueOf(LocalTime.parse(endTimeStr, timeFormatter));
-                                        data.setHoraFinal(horaFinal);
+                                        if (!times[1].isEmpty()) {
+                                            String endTimeStr = normalizeTime(times[1]);
+                                            Time horaFinal = Time.valueOf(LocalTime.parse(endTimeStr, timeFormatter));
+                                            data.setHoraFinal(horaFinal);
+                                        }
                                     }
                                 }
+                            } catch (Exception e) {
+                                // TODO: handle exception
+                                // data -> 08:00 -12:00-14:00 - 16:00
+                                // data -> 8 am-9 am
+                                // data -> 8:00 AM A 12:00 PM-13:00 PM A 16:00 PM
                             }
                             break;
                         case "Documentacion":
