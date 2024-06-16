@@ -28,51 +28,51 @@ public class CargoController {
 
 	@Autowired
 	CargoService cargoService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Cargo>> listar(){
+	public ResponseEntity<List<Cargo>> listar() {
 		List<Cargo> listaCargo = cargoService.listar();
-		return new ResponseEntity<List<Cargo>> (listaCargo, HttpStatus.OK);
+		return new ResponseEntity<List<Cargo>>(listaCargo, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody CargoDTO cargoDTO){
+	public ResponseEntity<?> create(@RequestBody CargoDTO cargoDTO) {
 		Cargo cargo = new Cargo(cargoDTO.getPersonal(),
-				                cargoDTO.getRolCargo(),
-				                cargoDTO.getViaje());
-		
+				cargoDTO.getRolCargo(),
+				cargoDTO.getViaje());
+
 		cargoService.save(cargo);
-		return new ResponseEntity("Cargo agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("Cargo agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody CargoDTO cargoDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CargoDTO cargoDTO) {
 		Cargo cargo = cargoService.getOne(id).get();
 		cargo.setPersonal(cargoDTO.getPersonal());
 		cargo.setRolCargo(cargoDTO.getRolCargo());
 		cargo.setViaje(cargoDTO.getViaje());
-			
+
 		cargoService.save(cargo);
-		return new ResponseEntity("Cargo actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("Cargo actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		cargoService.delete(id);
-		return new ResponseEntity("Cargo eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Cargo eliminado", HttpStatus.OK);
 	}
 }

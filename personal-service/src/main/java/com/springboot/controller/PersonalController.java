@@ -23,68 +23,67 @@ import com.springboot.dto.PersonalDTO;
 import com.springboot.entity.Personal;
 import com.springboot.service.PersonalService;
 
-
 @RestController
 @RequestMapping("/apipersonal")
 public class PersonalController {
 
 	@Autowired
 	PersonalService personalService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Personal>> listar(){
+	public ResponseEntity<List<Personal>> listar() {
 		List<Personal> listaPersonal = personalService.listar();
-		return new ResponseEntity<List<Personal>> (listaPersonal, HttpStatus.OK);
+		return new ResponseEntity<List<Personal>>(listaPersonal, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody PersonalDTO personalDTO){
+	public ResponseEntity<?> create(@RequestBody PersonalDTO personalDTO) {
 		Personal personal = new Personal(personalDTO.getNombre(),
-				                         personalDTO.getTelefono(),
-				                         personalDTO.getNroDocumento(),
-				                         personalDTO.getTipoDocumento());
+				personalDTO.getTelefono(),
+				personalDTO.getNroDocumento(),
+				personalDTO.getTipoDocumento());
 		personalService.save(personal);
-		return new ResponseEntity("Personal agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("Personal agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody PersonalDTO personalDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody PersonalDTO personalDTO) {
 		Personal personal = personalService.getOne(id).get();
 		personal.setNombre(personalDTO.getNombre());
 		personal.setTelefono(personalDTO.getTelefono());
 		personal.setNroDocumento(personalDTO.getNroDocumento());
 		personal.setTipoDocumento(personalDTO.getTipoDocumento());
 		personalService.save(personal);
-		return new ResponseEntity("Personal actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("Personal actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		personalService.delete(id);
-		return new ResponseEntity("Personal eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Personal eliminado", HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Personal> getPersonalById (@PathVariable ("id") int id){
+	public ResponseEntity<Personal> getPersonalById(@PathVariable("id") int id) {
 		Optional<Personal> optionalPersonal = personalService.getOne(id);
-		
+
 		if (optionalPersonal.isPresent()) {
 			return ResponseEntity.ok(optionalPersonal.get());
-		}else {
+		} else {
 			return ResponseEntity.status(404).body(null);
 		}
 	}

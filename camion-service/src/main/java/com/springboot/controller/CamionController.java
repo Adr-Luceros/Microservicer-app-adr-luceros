@@ -26,58 +26,57 @@ import com.springboot.service.CamionService;
 @RequestMapping("/apicamion")
 public class CamionController {
 
-	
 	@Autowired
 	CamionService camionService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Camion>> listar(){
+	public ResponseEntity<List<Camion>> listar() {
 		List<Camion> listaCamion = camionService.listar();
-		return new ResponseEntity<List<Camion>> (listaCamion, HttpStatus.OK);
+		return new ResponseEntity<List<Camion>>(listaCamion, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody CamionDTO camionDTO){
+	public ResponseEntity<?> create(@RequestBody CamionDTO camionDTO) {
 		Camion camion = new Camion(camionDTO.getMarca(),
-				                   camionDTO.getPlaca(),
-				                   camionDTO.getTc(),
-				                   camionDTO.getSoat(),
-				                   camionDTO.getCapacidad());
-		
+				camionDTO.getPlaca(),
+				camionDTO.getTc(),
+				camionDTO.getSoat(),
+				camionDTO.getCapacidad());
+
 		camionService.save(camion);
-		return new ResponseEntity("Camión agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("Camión agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody CamionDTO camionDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CamionDTO camionDTO) {
 		Camion camion = camionService.getOne(id).get();
 		camion.setMarca(camionDTO.getMarca());
 		camion.setPlaca(camionDTO.getPlaca());
 		camion.setTc(camionDTO.getTc());
 		camion.setSoat(camionDTO.getSoat());
 		camion.setCapacidad(camionDTO.getCapacidad());
-		
+
 		camionService.save(camion);
-		return new ResponseEntity("Camión actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("Camión actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		camionService.delete(id);
-		return new ResponseEntity("Camión eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Camión eliminado", HttpStatus.OK);
 	}
 }

@@ -28,55 +28,55 @@ public class PickingController {
 
 	@Autowired
 	PickingService pickingService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Picking>> listar(){
+	public ResponseEntity<List<Picking>> listar() {
 		List<Picking> listaPicking = pickingService.listar();
-		return new ResponseEntity<List<Picking>> (listaPicking, HttpStatus.OK);
+		return new ResponseEntity<List<Picking>>(listaPicking, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody PickingDTO pickingDTO){
+	public ResponseEntity<?> create(@RequestBody PickingDTO pickingDTO) {
 		Picking picking = new Picking(pickingDTO.getNumeroPicking(),
-				                      pickingDTO.getVolumen(),
-				                      pickingDTO.getEstadoPicking());
+				pickingDTO.getVolumen(),
+				pickingDTO.getEstadoPicking());
 		pickingService.save(picking);
-		return new ResponseEntity ("Picking creado", HttpStatus.CREATED);
+		return new ResponseEntity<>("Picking creado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update (@PathVariable ("id") int id, @RequestBody PickingDTO pickingDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody PickingDTO pickingDTO) {
 		Picking picking = pickingService.getOne(id).get();
 		picking.setNumeroPicking(pickingDTO.getNumeroPicking());
 		picking.setVolumen(pickingDTO.getVolumen());
 		picking.setEstadoPicking(pickingDTO.getEstadoPicking());
 		pickingService.save(picking);
-		return new ResponseEntity ("Picking actualiado", HttpStatus.OK);
+		return new ResponseEntity<>("Picking actualiado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		pickingService.delete(id);
-		return new ResponseEntity ("Picking eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Picking eliminado", HttpStatus.OK);
 	}
 	/*
-	@GetMapping("/{id}")
-	public ResponseDTO getPickingById(@PathVariable ("id") int id) {
-		return pickingService.getPickingById(id);
-	}
-	*/
+	 * @GetMapping("/{id}")
+	 * public ResponseDTO getPickingById(@PathVariable ("id") int id) {
+	 * return pickingService.getPickingById(id);
+	 * }
+	 */
 }

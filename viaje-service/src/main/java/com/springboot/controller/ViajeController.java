@@ -28,51 +28,51 @@ public class ViajeController {
 
 	@Autowired
 	ViajeService viajeService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Viaje>> listar(){
+	public ResponseEntity<List<Viaje>> listar() {
 		List<Viaje> listaViaje = viajeService.listar();
-		return new ResponseEntity<List<Viaje>> (listaViaje, HttpStatus.OK);
+		return new ResponseEntity<List<Viaje>>(listaViaje, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody ViajeDTO viajeDTO){
+	public ResponseEntity<?> create(@RequestBody ViajeDTO viajeDTO) {
 		Viaje viaje = new Viaje(viajeDTO.getFechaSalida(),
-				                viajeDTO.getAlmacen(),
-				                viajeDTO.getCamion());
-		
+				viajeDTO.getAlmacen(),
+				viajeDTO.getCamion());
+
 		viajeService.save(viaje);
-		return new ResponseEntity("Viaje agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("Viaje agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody ViajeDTO viajeDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody ViajeDTO viajeDTO) {
 		Viaje viaje = viajeService.getOne(id).get();
 		viaje.setFechaSalida(viajeDTO.getFechaSalida());
 		viaje.setAlmacen(viajeDTO.getAlmacen());
 		viaje.setCamion(viajeDTO.getCamion());
-		
+
 		viajeService.save(viaje);
-		return new ResponseEntity("Viaje actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("Viaje actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		viajeService.delete(id);
-		return new ResponseEntity("Viaje eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Viaje eliminado", HttpStatus.OK);
 	}
 }

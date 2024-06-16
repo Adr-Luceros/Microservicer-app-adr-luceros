@@ -28,42 +28,42 @@ public class FleteController {
 
 	@Autowired
 	FleteService fleteService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Flete>> listar(){
+	public ResponseEntity<List<Flete>> listar() {
 		List<Flete> listaFlete = fleteService.listar();
-		return new ResponseEntity<List<Flete>> (listaFlete, HttpStatus.OK);
+		return new ResponseEntity<List<Flete>>(listaFlete, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody FleteDTO fleteDTO){
+	public ResponseEntity<?> create(@RequestBody FleteDTO fleteDTO) {
 		Flete flete = new Flete(fleteDTO.getVolumenViaje(),
-				                fleteDTO.getGuia(),
-				                fleteDTO.getPicking(),
-				                fleteDTO.getRuta(),
-				                fleteDTO.getTipoFlete(),
-				                fleteDTO.getViaje());
-		
+				fleteDTO.getGuia(),
+				fleteDTO.getPicking(),
+				fleteDTO.getRuta(),
+				fleteDTO.getTipoFlete(),
+				fleteDTO.getViaje());
+
 		fleteService.save(flete);
-		return new ResponseEntity("Flete agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("Flete agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody FleteDTO fleteDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody FleteDTO fleteDTO) {
 		Flete flete = fleteService.getOne(id).get();
 		flete.setVolumenViaje(fleteDTO.getVolumenViaje());
 		flete.setGuia(fleteDTO.getGuia());
@@ -71,14 +71,14 @@ public class FleteController {
 		flete.setRuta(fleteDTO.getRuta());
 		flete.setTipoFlete(fleteDTO.getTipoFlete());
 		flete.setViaje(fleteDTO.getViaje());
-		
+
 		fleteService.save(flete);
-		return new ResponseEntity("Flete actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("Flete actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		fleteService.delete(id);
-		return new ResponseEntity("Flete eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Flete eliminado", HttpStatus.OK);
 	}
 }

@@ -29,43 +29,43 @@ public class TiendaController {
 
 	@Autowired
 	TiendaService tiendaService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Tienda>> listar(){
+	public ResponseEntity<List<Tienda>> listar() {
 		List<Tienda> listaTienda = tiendaService.listar();
-		return new ResponseEntity<List<Tienda>> (listaTienda, HttpStatus.OK);
+		return new ResponseEntity<List<Tienda>>(listaTienda, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody TiendaDTO tiendaDTO){
+	public ResponseEntity<?> create(@RequestBody TiendaDTO tiendaDTO) {
 		Tienda tienda = new Tienda(tiendaDTO.getPsEx(),
-				                   tiendaDTO.getDestinatario(),
-				                   tiendaDTO.getNombreTienda(),
-				                   tiendaDTO.getDistrito(),
-				                   tiendaDTO.getDireccion(),
-				                   tiendaDTO.getHoraInicio(),
-				                   tiendaDTO.getHoraFin(),
-				                   tiendaDTO.getContacto());
+				tiendaDTO.getDestinatario(),
+				tiendaDTO.getNombreTienda(),
+				tiendaDTO.getDistrito(),
+				tiendaDTO.getDireccion(),
+				tiendaDTO.getHoraInicio(),
+				tiendaDTO.getHoraFin(),
+				tiendaDTO.getContacto());
 		tiendaService.save(tienda);
-		return new ResponseEntity("Tienda agregada", HttpStatus.CREATED);
+		return new ResponseEntity<>("Tienda agregada", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody TiendaDTO tiendaDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody TiendaDTO tiendaDTO) {
 		Tienda tienda = tiendaService.getOne(id).get();
 		tienda.setPsEx(tiendaDTO.getPsEx());
 		tienda.setDestinatario(tiendaDTO.getDestinatario());
@@ -76,22 +76,22 @@ public class TiendaController {
 		tienda.setHoraFin(tiendaDTO.getHoraFin());
 		tienda.setContacto(tiendaDTO.getContacto());
 		tiendaService.save(tienda);
-		return new ResponseEntity("Tienda actualizada", HttpStatus.OK);
+		return new ResponseEntity<>("Tienda actualizada", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		tiendaService.delete(id);
-		return new ResponseEntity("Tienda eliminada", HttpStatus.OK);
+		return new ResponseEntity<>("Tienda eliminada", HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Tienda> getTiendaById (@PathVariable ("id") int id){
+	public ResponseEntity<Tienda> getTiendaById(@PathVariable("id") int id) {
 		Optional<Tienda> optionalTienda = tiendaService.getOne(id);
-		
+
 		if (optionalTienda.isPresent()) {
 			return ResponseEntity.ok(optionalTienda.get());
-		}else {
+		} else {
 			return ResponseEntity.status(404).body(null);
 		}
 	}

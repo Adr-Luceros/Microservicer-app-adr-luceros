@@ -28,50 +28,50 @@ public class TarifarioController {
 
 	@Autowired
 	TarifarioService tarifarioService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity <List<Tarifario>> listar(){
+	public ResponseEntity<List<Tarifario>> listar() {
 		List<Tarifario> listaTarifario = tarifarioService.listar();
-		return new ResponseEntity <List<Tarifario>> (listaTarifario, HttpStatus.OK);
+		return new ResponseEntity<List<Tarifario>>(listaTarifario, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody TarifarioDTO tarifarioDTO){
-		Tarifario tarifario = new Tarifario(tarifarioDTO.getCapacidad(), 
-				                            tarifarioDTO.getRuta(), 
-				                            tarifarioDTO.getTipoFlete());
+	public ResponseEntity<?> create(@RequestBody TarifarioDTO tarifarioDTO) {
+		Tarifario tarifario = new Tarifario(tarifarioDTO.getCapacidad(),
+				tarifarioDTO.getRuta(),
+				tarifarioDTO.getTipoFlete());
 		tarifarioService.save(tarifario);
-		return new ResponseEntity("Tarifario agregado", HttpStatus.OK);
+		return new ResponseEntity<>("Tarifario agregado", HttpStatus.OK);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update (@PathVariable ("id") int id, @RequestBody TarifarioDTO tarifarioDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody TarifarioDTO tarifarioDTO) {
 		Tarifario tarifario = tarifarioService.getOne(id).get();
 		tarifario.setCapacidad(tarifarioDTO.getCapacidad());
 		tarifario.setRuta(tarifarioDTO.getRuta());
 		tarifario.setTipoFlete(tarifarioDTO.getTipoFlete());
-		
+
 		tarifarioService.save(tarifario);
-		return new ResponseEntity("Tarifario actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("Tarifario actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity <?> delete (@PathVariable("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		tarifarioService.delete(id);
-		return new ResponseEntity("Tarifario eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("Tarifario eliminado", HttpStatus.OK);
 	}
 }

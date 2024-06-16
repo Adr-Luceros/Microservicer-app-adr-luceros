@@ -28,47 +28,47 @@ public class TipoFleteController {
 
 	@Autowired
 	TipoFleteService tipoFleteService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<TipoFlete>> listar(){
+	public ResponseEntity<List<TipoFlete>> listar() {
 		List<TipoFlete> listaTipoFlete = tipoFleteService.listar();
-		return new ResponseEntity<List<TipoFlete>> (listaTipoFlete, HttpStatus.OK);
+		return new ResponseEntity<List<TipoFlete>>(listaTipoFlete, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody TipoFleteDTO tipoFleteDTO){
+	public ResponseEntity<?> create(@RequestBody TipoFleteDTO tipoFleteDTO) {
 		TipoFlete tipoFlete = new TipoFlete(tipoFleteDTO.getNombre());
-		
+
 		tipoFleteService.save(tipoFlete);
-		return new ResponseEntity("TipoFlete agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("TipoFlete agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody TipoFleteDTO tipoFleteDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody TipoFleteDTO tipoFleteDTO) {
 		TipoFlete tipoFlete = tipoFleteService.getOne(id).get();
 		tipoFlete.setNombre(tipoFleteDTO.getNombre());
-		
+
 		tipoFleteService.save(tipoFlete);
-		return new ResponseEntity("TipoFlete actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("TipoFlete actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		tipoFleteService.delete(id);
-		return new ResponseEntity("TipoFlete eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("TipoFlete eliminado", HttpStatus.OK);
 	}
 }

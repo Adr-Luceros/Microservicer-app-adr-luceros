@@ -29,55 +29,57 @@ public class RutaController {
 
 	@Autowired
 	RutaService rutaService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Ruta>> listar(){
+	public ResponseEntity<List<Ruta>> listar() {
 		List<Ruta> listaRuta = rutaService.listar();
-		return new ResponseEntity<List<Ruta>> (listaRuta, HttpStatus.OK);
+		return new ResponseEntity<List<Ruta>>(listaRuta, HttpStatus.OK);
 	}
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody RutaDTO rutaDTO){
+	public ResponseEntity<?> create(@RequestBody RutaDTO rutaDTO) {
 		Ruta ruta = new Ruta(rutaDTO.getNombre());
-		
+
 		rutaService.save(ruta);
-		return new ResponseEntity("Ruta agregada", HttpStatus.CREATED);
+		return new ResponseEntity<>("Ruta agregada", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody RutaDTO rutaDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody RutaDTO rutaDTO) {
 		Ruta ruta = rutaService.getOne(id).get();
 		ruta.setNombre(rutaDTO.getNombre());
-		
+
 		rutaService.save(ruta);
-		return new ResponseEntity("Ruta actualizada", HttpStatus.OK);
+		return new ResponseEntity<>("Ruta actualizada", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		rutaService.delete(id);
-		return new ResponseEntity("Ruta eliminada", HttpStatus.OK);
+		return new ResponseEntity<>("Ruta eliminada", HttpStatus.OK);
 	}
-	
+
 	@GetMapping("/{id}")
-	public ResponseEntity<Ruta> getTiendaById (@PathVariable ("id") int id){
+	public ResponseEntity<Ruta> getTiendaById(@PathVariable("id") int id) {
 		Optional<Ruta> optionalRuta = rutaService.getOne(id);
-		
+
 		if (optionalRuta.isPresent()) {
 			return ResponseEntity.ok(optionalRuta.get());
-		}else {
+		} else {
 			return ResponseEntity.status(404).body(null);
 		}
 	}

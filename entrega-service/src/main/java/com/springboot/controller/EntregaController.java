@@ -26,56 +26,55 @@ import com.springboot.service.EntregaService;
 @RequestMapping("/apientrega")
 public class EntregaController {
 
-	
 	@Autowired
 	EntregaService entregaService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Entrega>> listar(){
+	public ResponseEntity<List<Entrega>> listar() {
 		List<Entrega> listaEntrega = entregaService.listar();
-		return new ResponseEntity<List<Entrega>> (listaEntrega, HttpStatus.OK);
+		return new ResponseEntity<List<Entrega>>(listaEntrega, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody EntregaDTO entregaDTO){
+	public ResponseEntity<?> create(@RequestBody EntregaDTO entregaDTO) {
 		Entrega entrega = new Entrega(entregaDTO.getObservaciones(),
-				                      entregaDTO.getEstadoEntrega(),
-				                      entregaDTO.getTienda(),
-				                      entregaDTO.getViaje());
-		
+				entregaDTO.getEstadoEntrega(),
+				entregaDTO.getTienda(),
+				entregaDTO.getViaje());
+
 		entregaService.save(entrega);
-		return new ResponseEntity("Entrega agregada", HttpStatus.CREATED);
+		return new ResponseEntity<>("Entrega agregada", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody EntregaDTO entregaDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody EntregaDTO entregaDTO) {
 		Entrega entrega = entregaService.getOne(id).get();
 		entrega.setObservaciones(entregaDTO.getObservaciones());
 		entrega.setEstadoEntrega(entregaDTO.getEstadoEntrega());
 		entrega.setTienda(entregaDTO.getTienda());
 		entrega.setViaje(entregaDTO.getViaje());
-				
+
 		entregaService.save(entrega);
-		return new ResponseEntity("Entrega actualizada", HttpStatus.OK);
+		return new ResponseEntity<>("Entrega actualizada", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		entregaService.delete(id);
-		return new ResponseEntity("Entrega eliminada", HttpStatus.OK);
+		return new ResponseEntity<>("Entrega eliminada", HttpStatus.OK);
 	}
 }

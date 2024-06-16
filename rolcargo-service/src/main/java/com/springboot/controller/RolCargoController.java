@@ -28,7 +28,7 @@ public class RolCargoController {
 
 	@Autowired
 	RolCargoService rolCargoService;
-		
+
 	@Value("${message}")
 	private String message;
 
@@ -42,33 +42,33 @@ public class RolCargoController {
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<RolCargo>> listar(){
+	public ResponseEntity<List<RolCargo>> listar() {
 		List<RolCargo> listaRolCargo = rolCargoService.listar();
-		return new ResponseEntity<List<RolCargo>> (listaRolCargo, HttpStatus.OK);
+		return new ResponseEntity<List<RolCargo>>(listaRolCargo, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody RolCargoDTO rolCargoDTO){
+	public ResponseEntity<?> create(@RequestBody RolCargoDTO rolCargoDTO) {
 		RolCargo rolCargo = new RolCargo(rolCargoDTO.getNombre());
-		
+
 		rolCargoService.save(rolCargo);
-		return new ResponseEntity("RolCargo agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("RolCargo agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody RolCargoDTO rolCargoDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody RolCargoDTO rolCargoDTO) {
 		RolCargo rolCargo = rolCargoService.getOne(id).get();
 		rolCargo.setNombre(rolCargoDTO.getNombre());
-		
+
 		rolCargoService.save(rolCargo);
-		return new ResponseEntity("RolCargo actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("RolCargo actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		rolCargoService.delete(id);
-		return new ResponseEntity("RolCargo eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("RolCargo eliminado", HttpStatus.OK);
 	}
 }

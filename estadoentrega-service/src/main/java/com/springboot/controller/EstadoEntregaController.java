@@ -26,51 +26,49 @@ import com.springboot.service.EstadoEntregaService;
 @RequestMapping("/apiestadoentrega")
 public class EstadoEntregaController {
 
-	
 	@Autowired
 	EstadoEntregaService estadoEntregaService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<EstadoEntrega>> listar(){
+	public ResponseEntity<List<EstadoEntrega>> listar() {
 		List<EstadoEntrega> listaEstadoEntrega = estadoEntregaService.listar();
-		return new ResponseEntity<List<EstadoEntrega>> (listaEstadoEntrega, HttpStatus.OK);
+		return new ResponseEntity<List<EstadoEntrega>>(listaEstadoEntrega, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody EstadoEntregaDTO estadoEntregaDTO){
+	public ResponseEntity<?> create(@RequestBody EstadoEntregaDTO estadoEntregaDTO) {
 		EstadoEntrega estadoEntrega = new EstadoEntrega(estadoEntregaDTO.getNombre());
-		
+
 		estadoEntregaService.save(estadoEntrega);
-		return new ResponseEntity("EstadoEntrega agregado", HttpStatus.CREATED);
+		return new ResponseEntity<>("EstadoEntrega agregado", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody EstadoEntregaDTO estadoEntregaDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody EstadoEntregaDTO estadoEntregaDTO) {
 		EstadoEntrega estadoEntrega = estadoEntregaService.getOne(id).get();
 		estadoEntrega.setNombre(estadoEntregaDTO.getNombre());
-		
-		
+
 		estadoEntregaService.save(estadoEntrega);
-		return new ResponseEntity("EstadoEntrega actualizado", HttpStatus.OK);
+		return new ResponseEntity<>("EstadoEntrega actualizado", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		estadoEntregaService.delete(id);
-		return new ResponseEntity("EstadoEntrega eliminado", HttpStatus.OK);
+		return new ResponseEntity<>("EstadoEntrega eliminado", HttpStatus.OK);
 	}
 }

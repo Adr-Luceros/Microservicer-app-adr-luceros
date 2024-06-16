@@ -26,50 +26,49 @@ import com.springboot.service.CapacidadService;
 @RequestMapping("/apicapacidad")
 public class CapacidadController {
 
-	
 	@Autowired
 	CapacidadService capacidadService;
-	
+
 	@Value("${message}")
 	private String message;
-	
+
 	@Value("${global-message}")
 	private String globalMessage;
-	
+
 	@RequestMapping(method = RequestMethod.GET)
-	public Map<String, String> message(){		
+	public Map<String, String> message() {
 		Map<String, String> response = new HashMap<>();
 		response.put("message", message);
 		response.put("global-message", globalMessage);
 		return response;
 	}
-	
+
 	@GetMapping("/listar")
-	public ResponseEntity<List<Capacidad>> listar(){
+	public ResponseEntity<List<Capacidad>> listar() {
 		List<Capacidad> listaCapacidad = capacidadService.listar();
-		return new ResponseEntity<List<Capacidad>> (listaCapacidad, HttpStatus.OK);
+		return new ResponseEntity<List<Capacidad>>(listaCapacidad, HttpStatus.OK);
 	}
-	
+
 	@PostMapping("/create")
-	public ResponseEntity<?> create (@RequestBody CapacidadDTO capacidadDTO){
+	public ResponseEntity<?> create(@RequestBody CapacidadDTO capacidadDTO) {
 		Capacidad capacidad = new Capacidad(capacidadDTO.getVolumen());
-		
+
 		capacidadService.save(capacidad);
-		return new ResponseEntity("Capacidad agregada", HttpStatus.CREATED);
+		return new ResponseEntity<>("Capacidad agregada", HttpStatus.CREATED);
 	}
-	
+
 	@PutMapping("/update/{id}")
-	public ResponseEntity<?> update(@PathVariable ("id") int id, @RequestBody CapacidadDTO capacidadDTO){
+	public ResponseEntity<?> update(@PathVariable("id") int id, @RequestBody CapacidadDTO capacidadDTO) {
 		Capacidad capacidad = capacidadService.getOne(id).get();
 		capacidad.setVolumen(capacidadDTO.getVolumen());
-		
+
 		capacidadService.save(capacidad);
-		return new ResponseEntity("Capacidad actualizada", HttpStatus.OK);
+		return new ResponseEntity<>("Capacidad actualizada", HttpStatus.OK);
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<?> delete (@PathVariable ("id") int id){
+	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		capacidadService.delete(id);
-		return new ResponseEntity("Capacidad eliminada", HttpStatus.OK);
+		return new ResponseEntity<>("Capacidad eliminada", HttpStatus.OK);
 	}
 }
