@@ -1,0 +1,10 @@
+spring:
+  application:
+    name: personal-service
+  cloud:
+   config:
+    uri: http://localhost:8850
+    
+springdoc:
+  swagger-ui:
+    path: /custom-path/swagger-ui.html

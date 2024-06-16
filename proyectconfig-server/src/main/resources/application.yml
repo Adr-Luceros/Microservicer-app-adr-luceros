@@ -1,0 +1,11 @@
+server:
+    port: ${PORT:8850}
+
+spring:
+    application:
+        name: proyectconfig-server
+    cloud:
+        config:
+            server:
+                git:
+                    uri: https://github.com/LuisOrihuela08/Proyecto_microservicios.git 
