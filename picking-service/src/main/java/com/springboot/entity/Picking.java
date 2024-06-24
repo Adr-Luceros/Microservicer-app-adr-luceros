@@ -21,22 +21,22 @@ public class Picking {
 	@JoinColumn(name = "estadopicking_id")
 	private EstadoPicking estadoPicking;
 	
-	public EstadoPicking getEstadoPicking() {
-		return estadoPicking;
-	}
-
-	public void setEstadoPicking(EstadoPicking estadoPicking) {
-		this.estadoPicking = estadoPicking;
-	}
-
 	public Picking() {
 		
 	}
 
 	public Picking(Integer numeroPicking, double volumen, EstadoPicking estadoPicking) {
-		
+		super();
 		this.numeroPicking = numeroPicking;
 		this.volumen = volumen;
+		this.estadoPicking = estadoPicking;
+	}
+
+	public EstadoPicking getEstadoPicking() {
+		return estadoPicking;
+	}
+
+	public void setEstadoPicking(EstadoPicking estadoPicking) {
 		this.estadoPicking = estadoPicking;
 	}
 

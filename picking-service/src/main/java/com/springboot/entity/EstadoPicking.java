@@ -37,6 +37,7 @@ public class EstadoPicking {
 	public void setPicking(List<Picking> picking) {
 		this.picking = picking;
 	}
+	
 	public Integer getEstadopicking_id() {
 		return estadopicking_id;
 	}

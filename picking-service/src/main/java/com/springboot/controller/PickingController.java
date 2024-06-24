@@ -52,8 +52,8 @@ public class PickingController {
 	@PostMapping("/create")
 	public ResponseEntity<?> create(@RequestBody PickingDTO pickingDTO) {
 		Picking picking = new Picking(pickingDTO.getNumeroPicking(),
-				pickingDTO.getVolumen(),
-				pickingDTO.getEstadoPicking());
+				                      pickingDTO.getVolumen(),
+				                      pickingDTO.getEstadoPicking());
 		pickingService.save(picking);
 		return new ResponseEntity<>("Picking creado", HttpStatus.CREATED);
 	}
@@ -64,6 +64,7 @@ public class PickingController {
 		picking.setNumeroPicking(pickingDTO.getNumeroPicking());
 		picking.setVolumen(pickingDTO.getVolumen());
 		picking.setEstadoPicking(pickingDTO.getEstadoPicking());
+		
 		pickingService.save(picking);
 		return new ResponseEntity<>("Picking actualiado", HttpStatus.OK);
 	}
@@ -74,9 +75,10 @@ public class PickingController {
 		return new ResponseEntity<>("Picking eliminado", HttpStatus.OK);
 	}
 	/*
-	 * @GetMapping("/{id}")
-	 * public ResponseDTO getPickingById(@PathVariable ("id") int id) {
-	 * return pickingService.getPickingById(id);
-	 * }
-	 */
+	@GetMapping("/{id}")
+    public ResponseEntity<PickingDTO> getPickingWithEstadoPicking(@PathVariable("id") Integer id) {
+        PickingDTO pickingDTO = pickingService.getPickingWithEstadoPicking(id);
+        return ResponseEntity.ok(pickingDTO);
+    }
+    */
 }

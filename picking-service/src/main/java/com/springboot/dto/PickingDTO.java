@@ -15,10 +15,11 @@ public class PickingDTO {
 		this.volumen = volumen;
 		
 	}
-
+	
 	public EstadoPicking getEstadoPicking() {
 		return estadoPicking;
 	}
+
 
 	public void setEstadoPicking(EstadoPicking estadoPicking) {
 		this.estadoPicking = estadoPicking;
