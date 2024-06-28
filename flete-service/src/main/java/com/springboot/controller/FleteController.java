@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.dto.FleteDTO;
@@ -83,6 +82,7 @@ public class FleteController {
 		fleteService.delete(id);
 		return new ResponseEntity<>("Flete eliminado", HttpStatus.OK);
 	}
+
 	@GetMapping("/{id}")
 	public ResponseEntity<Flete> getEstadoPickingId(@PathVariable("id") int id) {
 		Optional<Flete> optionalFlete = fleteService.getOne(id);
@@ -93,9 +93,10 @@ public class FleteController {
 			return ResponseEntity.status(404).body(null);
 		}
 	}
+
 	@GetMapping("/byNombreRuta/{nombreRuta}")
-    public ResponseEntity<List<Flete>> getFletesByNombreRuta(@PathVariable("nombreRuta") String nombreRuta) {
-        List<Flete> fletes = fleteService.getFletesByNombreRuta(nombreRuta);
-        return ResponseEntity.ok(fletes);
-    }
+	public ResponseEntity<List<Flete>> getFletesByNombreRuta(@PathVariable("nombreRuta") String nombreRuta) {
+		List<Flete> fletes = fleteService.getFletesByNombreRuta(nombreRuta);
+		return ResponseEntity.ok(fletes);
+	}
 }
