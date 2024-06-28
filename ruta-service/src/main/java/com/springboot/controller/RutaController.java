@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.springboot.dto.RutaDTO;
+import com.springboot.entity.Flete;
+import com.springboot.entity.FleteResponse;
 import com.springboot.entity.Ruta;
 import com.springboot.service.RutaService;
 
@@ -83,4 +85,15 @@ public class RutaController {
 			return ResponseEntity.status(404).body(null);
 		}
 	}
+	// Endpoint para buscar una ruta por nombre
+    @GetMapping("/ruta/{nombre}")
+    public Ruta buscarRutaPorNombre(@PathVariable String nombre) {
+        return rutaService.buscarPorNombre(nombre);
+    }
+	
+    @GetMapping("/apiflete/byNombreRuta/{nombreRuta}")
+    public ResponseEntity<List<Flete>> getFletesByNombreRuta(@PathVariable("nombreRuta") String nombreRuta) {
+    	 List<Flete> fletes = rutaService.getFletesByNombreRuta(nombreRuta);
+    	    return ResponseEntity.ok(fletes);
+    	}	    
 }

@@ -8,9 +8,11 @@ import org.springframework.web.multipart.MultipartFile;
 import com.service.excel_service.Dto.RecepcionData;
 import com.service.excel_service.Dto.ViajeDto;
 import com.service.excel_service.Entity.Mensaje;
+import com.service.excel_service.Entity.Personal;
 import com.service.excel_service.Entity.Viaje;
 import com.service.excel_service.Service.AgruparService;
 import com.service.excel_service.Service.AlmacenarDatosService;
+import com.service.excel_service.Service.ExcelService;
 import com.service.excel_service.Service.RecepcionService;
 
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,9 @@ public class RecepcionController {
 
     @Autowired
     AlmacenarDatosService almacenarDataService;
+    
+    @Autowired
+    ExcelService excelService;
 
     @PostMapping("/excel")
     public ResponseEntity<?> processExcel(@RequestParam(name = "file") MultipartFile file) {
@@ -83,6 +88,11 @@ public class RecepcionController {
             return new ResponseEntity<>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<>(viajes, HttpStatus.OK);
+    }
+    
+    @GetMapping("/apipersonal/listar")
+    public List<Personal> getAllPersonal(){
+    	return excelService.getAllPersonal();
     }
 
 }

@@ -33,4 +33,8 @@ public class FleteService {
 	public void delete(int id) {
 		fleteRepository.deleteById(id);
 	}
+	public List<Flete> getFletesByNombreRuta(String nombreRuta) {
+        // Implementa la lógica para buscar fletes por nombre de ruta
+        return fleteRepository.findByRutaNombre(nombreRuta);
+    }
 }

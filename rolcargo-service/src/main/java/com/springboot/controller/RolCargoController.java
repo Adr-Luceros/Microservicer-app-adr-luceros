@@ -3,6 +3,7 @@ package com.springboot.controller;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -70,5 +71,15 @@ public class RolCargoController {
 	public ResponseEntity<?> delete(@PathVariable("id") int id) {
 		rolCargoService.delete(id);
 		return new ResponseEntity<>("RolCargo eliminado", HttpStatus.OK);
+	}
+	@GetMapping("/{id}")
+	public ResponseEntity<RolCargo> getEstadoPickingId(@PathVariable("id") int id) {
+		Optional<RolCargo> optionalRolCargo = rolCargoService.getOne(id);
+
+		if (optionalRolCargo.isPresent()) {
+			return ResponseEntity.ok(optionalRolCargo.get());
+		} else {
+			return ResponseEntity.status(404).body(null);
+		}
 	}
 }

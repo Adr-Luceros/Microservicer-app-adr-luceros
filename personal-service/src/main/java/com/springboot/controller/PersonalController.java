@@ -87,4 +87,10 @@ public class PersonalController {
 			return ResponseEntity.status(404).body(null);
 		}
 	}
+	
+	
+	@GetMapping("/apirolcargo/{id}")
+    public PersonalDTO getPersonalInfoWithRolCargo(@PathVariable Integer id) {
+        return personalService.getPersonalInfoWithRolCargo(id);
+    }
 }

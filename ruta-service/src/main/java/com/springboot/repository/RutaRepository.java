@@ -6,4 +6,5 @@ import com.springboot.entity.Ruta;
 
 public interface RutaRepository extends JpaRepository<Ruta, Integer>{
 
+	Ruta findByNombre(String nombre);
 }

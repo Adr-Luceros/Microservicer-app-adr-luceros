@@ -8,4 +8,4 @@ spring:
         config:
             server:
                 git:
-                    uri: https://github.com/LuisOrihuela08/Proyecto_microservicios.git 
+                    uri: https://github.com/Adr-Luceros/Config-global-microservice.git

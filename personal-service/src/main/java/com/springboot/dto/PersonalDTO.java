@@ -1,5 +1,7 @@
 package com.springboot.dto;
 
+import com.springboot.entity.RolCargo;
+
 public class PersonalDTO {
 
 	private String nombre;
@@ -7,6 +9,15 @@ public class PersonalDTO {
 	private String nroDocumento;
 	private String tipoDocumento;
 		
+	private RolCargo rolCargo;
+	
+	public RolCargo getRolCargo() {
+		return rolCargo;
+	}
+	public void setRolCargo(RolCargo rolCargo) {
+		this.rolCargo = rolCargo;
+	}
+	
 	public PersonalDTO() {
 		
 	}
