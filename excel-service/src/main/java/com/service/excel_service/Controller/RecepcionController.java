@@ -8,15 +8,15 @@ import org.springframework.web.multipart.MultipartFile;
 import com.service.excel_service.Dto.RecepcionData;
 import com.service.excel_service.Dto.ViajeDto;
 import com.service.excel_service.Entity.Mensaje;
-import com.service.excel_service.Entity.Personal;
 import com.service.excel_service.Entity.Viaje;
 import com.service.excel_service.Service.AgruparService;
 import com.service.excel_service.Service.AlmacenarDatosService;
-import com.service.excel_service.Service.ExcelService;
 import com.service.excel_service.Service.RecepcionService;
 
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Date;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,9 +37,6 @@ public class RecepcionController {
 
     @Autowired
     AlmacenarDatosService almacenarDataService;
-    
-    @Autowired
-    ExcelService excelService;
 
     @PostMapping("/excel")
     public ResponseEntity<?> processExcel(@RequestParam(name = "file") MultipartFile file) {
@@ -89,10 +86,24 @@ public class RecepcionController {
         }
         return new ResponseEntity<>(viajes, HttpStatus.OK);
     }
-    
-    @GetMapping("/apipersonal/listar")
-    public List<Personal> getAllPersonal(){
-    	return excelService.getAllPersonal();
+
+    @GetMapping("/rango")
+    public ResponseEntity<List<Viaje>> obtenerViajesPorRangoDeFechas(
+            @RequestParam("fechaInicio") String fechaInicioStr, @RequestParam("fechaFin") String fechaFinStr) {
+
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date fechaInicio = dateFormat.parse(fechaInicioStr);
+            Date fechaFin = dateFormat.parse(fechaFinStr);
+            List<Viaje> viajes = almacenarDataService.obtenerViajesPorRangoDeFechas(fechaInicio, fechaFin);
+
+            if (viajes.isEmpty()) {
+                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+            }
+            return new ResponseEntity<>(viajes, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

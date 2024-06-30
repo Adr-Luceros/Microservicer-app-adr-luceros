@@ -118,4 +118,8 @@ public class AlmacenarDatosService {
         Date hoy = Date.from(localDate.atStartOfDay(ZoneId.systemDefault()).toInstant());
         return viajeRepository.findByFechaDeSalidaHoy(hoy);
     }
+
+    public List<Viaje> obtenerViajesPorRangoDeFechas(Date fechaInicio, Date fechaFin) {
+        return viajeRepository.findByFechaDeSalidaBetween(fechaInicio, fechaFin);
+    }
 }

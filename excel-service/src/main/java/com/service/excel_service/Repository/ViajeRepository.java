@@ -14,4 +14,7 @@ import com.service.excel_service.Entity.Viaje;
 public interface ViajeRepository extends JpaRepository<Viaje, Integer> {
     @Query("SELECT v FROM Viaje v WHERE DATE(v.fechaDeSalida) = DATE(:hoy)")
     List<Viaje> findByFechaDeSalidaHoy(@Param("hoy") Date hoy);
+
+    @Query("SELECT v FROM Viaje v WHERE v.fechaDeSalida BETWEEN :fechaInicio AND :fechaFin")
+    List<Viaje> findByFechaDeSalidaBetween(@Param("fechaInicio") Date fechaInicio, @Param("fechaFin") Date fechaFin);
 }
