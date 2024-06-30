@@ -26,6 +26,7 @@ public class TipoFlete implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "tipoflete_id")
     private int id;
+    @Column(name = "nombre")
     private String nombreTipo;
 
     @OneToMany(mappedBy = "tipo")

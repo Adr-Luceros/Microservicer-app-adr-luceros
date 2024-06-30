@@ -27,6 +27,7 @@ public class Viaje implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "viaje_id")
     private int id;
+    @Column(name = "fecha_salida")
     private Date fechaDeSalida;
     private String almacen;
 
