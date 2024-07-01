@@ -24,10 +24,6 @@ public class PersonalService {
 	@Autowired
 	RolCargoFeign rolCargoFeign;
 	
-	
-	
-	
-
 	public PersonalDTO getPersonalInfoWithRolCargo(Integer id) {
 		PersonalDTO personal = new PersonalDTO();
 		RolCargo rolCargo = rolCargoFeign.getRolCargoById(id);

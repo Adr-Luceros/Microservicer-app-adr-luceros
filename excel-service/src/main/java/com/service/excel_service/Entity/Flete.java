@@ -43,7 +43,7 @@ public class Flete implements Serializable {
     private Viaje viaje;
 
     @ManyToOne
-    @JoinColumn(name = "tipo_flete_id")
+    @JoinColumn(name = "tipoflete_id")
     private TipoFlete tipo;
 
     public Flete(Picking picking, Viaje viaje, TipoFlete tipo) {

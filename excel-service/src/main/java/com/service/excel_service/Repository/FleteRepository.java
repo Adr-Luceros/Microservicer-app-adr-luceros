@@ -9,6 +9,6 @@ import com.service.excel_service.Entity.Flete;
 
 @Repository
 public interface FleteRepository extends JpaRepository<Flete, Integer> {
-    @Query(value = "SELECT * FROM flete WHERE picking_id = ?1 AND viaje_id = ?2 AND tipo_flete_id = ?3", nativeQuery = true)
+    @Query(value = "SELECT * FROM flete WHERE picking_id = ?1 AND viaje_id = ?2 AND tipoflete_id = ?3", nativeQuery = true)
     public Flete findByPickingAndViajeAndTipoSQL(int pickingId, int viajeId, int tipoId);
 }
