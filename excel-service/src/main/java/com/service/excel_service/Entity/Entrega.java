@@ -26,6 +26,7 @@ public class Entrega implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "entrega_id")
     private int id;
+    private String observaciones;
 
     @ManyToOne
     @JoinColumn(name = "viaje_id")
@@ -36,12 +37,14 @@ public class Entrega implements Serializable {
     @JoinColumn(name = "tienda_id")
     private Tienda tienda;
 
+    @ManyToOne
+    @JoinColumn(name = "estadoentrega_id")
+    private EstadoEntrega estadoEntrega;
+
     public Entrega(Viaje viaje, Tienda tienda) {
         this.viaje = new Viaje();
         this.viaje.setId(viaje.getId());
         this.tienda = new Tienda();
         this.tienda.setId(tienda.getId());
     }
-
-    // atributo estado de la entrega (puede y debe ser una entidad)
 }

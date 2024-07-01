@@ -27,10 +27,15 @@ public class Flete implements Serializable {
     @Column(name = "flete_id")
     private int id;
     private double volumenViaje;
+    private String guia;
 
     @ManyToOne
     @JoinColumn(name = "picking_id")
     private Picking picking;
+
+    @ManyToOne
+    @JoinColumn(name = "ruta_id")
+    private Ruta ruta;
 
     @ManyToOne
     @JoinColumn(name = "viaje_id")

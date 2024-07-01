@@ -35,6 +35,7 @@ public class Tienda implements Serializable {
     private String direccion;
     private Time horaInicio;
     private Time horaFin;
+    private String contacto;
 
     @OneToMany(mappedBy = "tienda")
     @JsonIgnore
@@ -49,6 +50,7 @@ public class Tienda implements Serializable {
         private String direccion;
         private Time horaInicio;
         private Time horaFin;
+        private String contacto;
 
         public Builder id(int id) {
             this.id = id;
@@ -90,8 +92,14 @@ public class Tienda implements Serializable {
             return this;
         }
 
+        public Builder contacto(String contacto) {
+            this.contacto = contacto;
+            return this;
+        }
+
         public Tienda build() {
-            return new Tienda(id, psEx, destinatario, nombreTienda, distrito, direccion, horaInicio, horaFin, null);
+            return new Tienda(id, psEx, destinatario, nombreTienda, distrito, direccion, horaInicio, horaFin, contacto,
+                    null);
         }
     }
 }

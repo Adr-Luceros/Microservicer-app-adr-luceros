@@ -41,6 +41,9 @@ public class Viaje implements Serializable {
     @OneToMany(mappedBy = "viaje")
     private List<Entrega> entregas;
 
+    @OneToMany(mappedBy = "viaje")
+    private List<Cargo> cargos;
+
     public Viaje(Date fechaDeSalida, String almacen, Camion camion) {
         this.fechaDeSalida = fechaDeSalida;
         this.almacen = almacen;

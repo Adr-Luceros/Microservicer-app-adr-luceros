@@ -20,17 +20,15 @@ import lombok.Setter;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Personal {
+public class RolCargo {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer personal_id;
+	private Integer rolcargo_id;
 	private String nombre;
-	private String telefono;
-	private String nroDocumento;
-	private String tipoDocumento;
 
-	@OneToMany(mappedBy = "personal", fetch = FetchType.LAZY)
+	@OneToMany(mappedBy = "rolCargo", fetch = FetchType.LAZY)
 	@JsonIgnore
 	private List<Cargo> cargo;
+
 }
