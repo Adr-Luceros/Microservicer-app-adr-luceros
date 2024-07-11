@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 
 import com.springboot.entity.Flete;
 
-@FeignClient(name = "flete-service", url = "http://localhost:8864")
+@FeignClient(name = "flete-service", url = "http://localhost:8080")
 public interface FleteFeignClient {
 
     @GetMapping("/apiflete/byNombreRuta/{nombreRuta}")
